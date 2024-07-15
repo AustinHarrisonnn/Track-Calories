@@ -7,28 +7,37 @@ class CalorieTrackerApp:
     def __init__(self):
         self.root = Tk()  #Creates main window
         self.root.title("Calorie Tracker")
+        self.root.geometry("500x400")
+        self.root.configure(bg='light blue')
         self.data_manager = DataManager("calories.csv")  #Initialize DataManager with the file name
 
         self.setup_ui()  #Calling method to set up user interface
 
     def setup_ui(self):
+        #Creating a frame for the input fields to move where they are located in window
+        input_frame = Frame(self.root, bg='light blue')
+        input_frame.pack(pady=20)
+
         #Creating and placing label and entry for the meal user input
-        Label(self.root, text="Meal:").grid(row=0, column=0)
-        self.meal_entry = Entry(self.root)
-        self.meal_entry.grid(row=0, column=1)
+        Label(input_frame, text="Meal:", font=("Verdana", 14), fg='dark green', bg='light blue').grid(row=0, column=0, padx=10)
+        self.meal_entry = Entry(input_frame)
+        self.meal_entry.grid(row=0, column=1, padx=10)
 
         #Creating and placing label and entry for the calories user input
-        Label(self.root, text="Calories:").grid(row=1, column=0)
-        self.calories_entry = Entry(self.root)
-        self.calories_entry.grid(row=1, column=1)
+        Label(input_frame, text="Calories:", font=("Verdana", 14), fg='dark green', bg='light blue').grid(row=1, column=0, padx=10)
+        self.calories_entry = Entry(input_frame)
+        self.calories_entry.grid(row=1, column=1, padx=10)
+
+        button_frame = Frame(self.root, bg='light blue')
+        button_frame.pack(side=BOTTOM, pady=20)
 
         #Button to add new meal
-        add_button = Button(self.root, text="Add Meal", command=self.new_meal)
-        add_button.grid(row=2, column=0, columnspan=2)
+        add_button = Button(button_frame, text="Add Meal", font=("Verdana", 12, "bold"), command=self.new_meal, width=17, height=2, padx=10, pady=10, bg='dark green')
+        add_button.grid(row=0, column=0, padx=10)
 
         #Button to view meal history
-        view_button = Button(self.root, text="View History", command=self.view_records)
-        view_button.grid(row=3, column=0, columnspan=2)
+        view_button = Button(button_frame, text="View History", font=("Verdana", 12, "bold"), command=self.view_records, width=17, height=2, padx=10, pady=10, bg='dark green')
+        view_button.grid(row=0, column=1, padx=10)
 
         #Window closing protocol
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
